@@ -21,8 +21,6 @@
 
 <style>
   .wrapper {
-    position: absolute;
-    top: 0;
     width: 100%;
     padding: var(--spacing);
     text-align: center;

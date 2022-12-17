@@ -3,6 +3,7 @@
   import { connectionError } from "./connectionError";
   import Logo from "./lib/Logo.svelte";
   import MainSong from "./lib/MainSong.svelte";
+  import QrCode from "./lib/QRCode.svelte";
   import Queue from "./lib/Queue.svelte";
   import Time from "./lib/Time.svelte";
   import Volume from "./lib/Volume.svelte";
@@ -65,17 +66,19 @@
   <section class="section w40">
     <MainSong {...playing} />
   </section>
-  <section class="section w20">
+  <section class="section w20" style:justify-content="space-between">
     <Time />
     <Logo />
     {#if $connectionError}
       <div class="error">
-        <h1>Connection Error</h1>
+        <h3>Connection Error</h3>
         <p>
           Please make sure that the server is running and that the port is
           correct.
         </p>
       </div>
+    {:else}
+      <QrCode />
     {/if}
   </section>
   <section class="section w40">
@@ -117,7 +120,16 @@
     padding: var(--spacing);
     box-sizing: border-box;
     margin: 0 var(--spacing);
-    position: absolute;
-    bottom: 0;
+  }
+  .error h3 {
+    font-size: 3.5vh;
+    line-height: 5vh;
+    margin: 0;
+    margin-bottom: var(--spacing);
+  }
+  .error p {
+    font-size: 2vh;
+    line-height: 1.5;
+    margin: 0;
   }
 </style>
