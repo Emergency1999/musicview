@@ -1,5 +1,6 @@
 <script>
   import { onMount } from "svelte";
+  import { connectionError } from "./connectionError";
   import Logo from "./lib/Logo.svelte";
   import MainSong from "./lib/MainSong.svelte";
   import Queue from "./lib/Queue.svelte";
@@ -7,15 +8,14 @@
 
   export let playing = {
     currentTrack: {
-      name: "Chabos wissen wer der Babo ist (Jazz/Swing Version)",
-      artist: "Marti Fischer",
-      coverURL:
-        "https://i.scdn.co/image/ab67616d00001e02e06457bcad9e375ba856a11c",
-      dj: "DJ Fieka",
-      songDurationMs: 185000,
+      name: "",
+      artist: "",
+      coverURL: "such-empty.jpg",
+      dj: "",
+      songDurationMs: 0,
       endDate: new Date(),
     },
-    positionInTrack: 37000,
+    positionInTrack: 0,
   };
 
   onMount(() => {
@@ -23,7 +23,7 @@
     function resetSeconds() {
       if (secondsInterval) clearInterval(secondsInterval);
       secondsInterval = setInterval(() => {
-        playing.positionInTrack += 100;
+        if (!$connectionError) playing.positionInTrack += 100;
       }, 100);
     }
 
@@ -42,6 +42,10 @@
             resetSeconds();
 
           playing = data;
+          $connectionError = false;
+        })
+        .catch(() => {
+          $connectionError = true;
         });
     }
 
@@ -62,6 +66,15 @@
   </section>
   <section class="section w20">
     <Logo />
+    {#if $connectionError}
+      <div class="error">
+        <h1>Connection Error</h1>
+        <p>
+          Please make sure that the server is running and that the port is
+          correct.
+        </p>
+      </div>
+    {/if}
   </section>
   <section class="section w40">
     <Volume />
@@ -82,11 +95,27 @@
     height: 100%;
     width: 100%;
     max-width: 100%;
+    position: relative;
   }
   .w40 {
     width: 40%;
   }
   .w20 {
     width: 20%;
+  }
+  .error {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: calc(100% - 2 * var(--spacing));
+    background-color: var(--error);
+    border-radius: var(--border-radius);
+    text-align: center;
+    padding: var(--spacing);
+    box-sizing: border-box;
+    margin: 0 var(--spacing);
+    position: absolute;
+    bottom: 0;
   }
 </style>

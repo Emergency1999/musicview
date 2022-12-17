@@ -43,7 +43,7 @@
   }
   .progress-bar__fill {
     height: 100%;
-    background-color: var(--fill, var(--text-low));
+    background-color: var(--fill, var(--bg2));
     border-radius: var(--border-radius);
   }
 </style>

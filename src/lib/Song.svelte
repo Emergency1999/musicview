@@ -69,6 +69,7 @@
     flex: 1 1 0;
     box-sizing: border-box;
     box-shadow: var(--shadow);
+    max-height: 30vh;
   }
   .text-wrapper {
     display: flex;

@@ -1,17 +1,8 @@
 <script>
+  import { connectionError } from "../connectionError";
   import { onMount } from "svelte";
   import Song from "./Song.svelte";
-  export let queue = [
-    {
-      name: "Chabos wissen wer der Babo ist (Jazz/Swing Version)",
-      artist: "Marti Fischer",
-      coverURL:
-        "https://i.scdn.co/image/ab67616d00001e02e06457bcad9e375ba856a11c",
-      dj: "DJ Fieka",
-      playingTime: Math.round(Math.random() * 60 + 127) * 1000,
-      startTime: new Date(Date.now() + Math.round(Math.random() * 60 + 127)),
-    },
-  ];
+  export let queue = [];
   export let displayedSongs = 5;
   onMount(() => {
     async function fetchData() {
@@ -19,6 +10,10 @@
         .then((res) => res.json())
         .then((data) => {
           queue = data;
+          $connectionError = false;
+        })
+        .catch(() => {
+          $connectionError = true;
         });
     }
 
@@ -32,7 +27,17 @@
 <div class="wrapper">
   {#each queue.slice(0, displayedSongs) as song}
     <Song {...song} />
+  {:else}
+    <span class="no-queue">Keine Songs in Queue</span>
   {/each}
+  {#each new Array(displayedSongs - queue.length) as _}
+    <div class="empty" />
+  {/each}
+  {#if queue.length > displayedSongs}
+    <div class="more">
+      <span>+{queue.length - displayedSongs + 100}</span>
+    </div>
+  {/if}
 </div>
 
 <style>
@@ -40,8 +45,34 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
     width: 100%;
     flex-grow: 1;
+    position: relative;
+  }
+  .empty {
+    flex: 1 1 0;
+  }
+  .no-queue {
+    color: var(--text);
+    font-size: 2.5vh;
+    text-align: center;
+    width: 100%;
+    margin-top: var(--spacing);
+    padding: var(--spacing);
+  }
+  .more {
+    --size: 6vh;
+    position: absolute;
+    bottom: calc(var(--size) / -2);
+    right: calc(50% - (var(--size) / 2));
+    width: var(--size);
+    height: var(--size);
+    background: var(--bg2);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    box-shadow: var(--shadow);
+    font-size: calc(var(--size) / 3);
   }
 </style>
