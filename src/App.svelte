@@ -4,6 +4,7 @@
   import Logo from "./lib/Logo.svelte";
   import MainSong from "./lib/MainSong.svelte";
   import Queue from "./lib/Queue.svelte";
+  import Time from "./lib/Time.svelte";
   import Volume from "./lib/Volume.svelte";
 
   export let playing = {
@@ -65,6 +66,7 @@
     <MainSong {...playing} />
   </section>
   <section class="section w20">
+    <Time />
     <Logo />
     {#if $connectionError}
       <div class="error">
