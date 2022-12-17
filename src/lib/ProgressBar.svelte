@@ -37,7 +37,7 @@
     justify-content: left;
     height: var(--height, 2em);
     width: 100%;
-    background-color: var(--bg);
+    background-color: var(--bg-dark);
     border-radius: var(--border-radius);
     cursor: pointer;
   }
