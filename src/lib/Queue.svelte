@@ -36,7 +36,7 @@
   {/each}
   {#if queue.length > displayedSongs}
     <div class="more">
-      <span>+{queue.length - displayedSongs + 100}</span>
+      <span>+{queue.length - displayedSongs}</span>
     </div>
   {/if}
 </div>
