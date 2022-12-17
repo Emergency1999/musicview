@@ -31,9 +31,10 @@
     {:else}
       <div class="empty" />
     {/if}
-  {:else}
-    <span class="no-queue">Keine Songs in Queue</span>
   {/each}
+  {#if queue.length === 0}
+    <span class="no-queue">Keine Songs in Queue</span>
+  {/if}
   {#if queue.length > displayedSongs}
     <div class="more">
       <span>+{queue.length - displayedSongs}</span>
