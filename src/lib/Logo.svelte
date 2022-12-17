@@ -27,9 +27,10 @@
   }
   h2 {
     text-align: center;
-    font-size: 3.2rem;
+    font-size: 5vh;
+    line-height: 6vh;
     margin: 0;
     margin-top: var(--spacing);
-    color: var(--text-low);
+    color: var(--text);
   }
 </style>

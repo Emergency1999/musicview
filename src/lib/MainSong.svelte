@@ -76,10 +76,13 @@
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+    font-size: 5vh;
+    line-height: 6vh;
   }
   .subtitle {
     display: flex;
-    font-size: 1.2em;
+    font-size: 2vh;
+    line-height: 3vh;
     font-weight: bold;
     color: var(--text-low);
     margin-bottom: var(--spacing);

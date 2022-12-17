@@ -34,12 +34,14 @@
 <div class="wrapper">
   <div class="text-wrapper">
     <div class="cover" style:background-image={"url(" + coverURL + ")"} />
-    <div class="song-info">
-      <span class="title">{name}</span>
-      <span class="artist">{artist}</span>
-      {#if dj}
+    <div class="info-outer">
+      <div class="song-info">
+        <span class="title">{name}</span>
+        <span class="artist">{artist}</span>
+        <!-- {#if dj} -->
         <span class="added-by">Hinzugefügt von {dj}</span>
-      {/if}
+        <!-- {/if} -->
+      </div>
     </div>
     <div class="play-info">
       <span>{waitingTimeString}</span>
@@ -80,24 +82,45 @@
     aspect-ratio: 1;
     background-size: cover;
   }
+  .info-outer {
+    height: 100%;
+    flex: 1 1 0;
+    position: relative;
+  }
   .song-info {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    max-width: 100%;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     justify-content: center;
-    flex-grow: 1;
     padding: 0 var(--spacing);
   }
   .title {
-    font-size: 1.5rem;
+    font-size: 2.5vh;
+    line-height: 3.5vh;
     font-weight: bold;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 100%;
   }
   .artist {
-    font-size: 1.2rem;
+    font-size: 1.75vh;
+    line-height: 2.25vh;
     color: var(--text-low);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 100%;
   }
   .added-by {
-    font-size: 1rem;
+    font-size: 1.5vh;
+    line-height: 2.25vh;
     color: var(--text-low);
   }
   .play-info {
@@ -105,7 +128,8 @@
     top: 0;
     right: 0;
     padding: var(--spacing);
-    font-size: 1.2rem;
+    font-size: 2vh;
+    line-height: 2vh;
     color: var(--text-low);
   }
 </style>

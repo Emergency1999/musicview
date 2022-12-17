@@ -57,13 +57,13 @@
 </script>
 
 <main class="main">
-  <section class="section">
+  <section class="section w40">
     <MainSong {...playing} />
   </section>
-  <section class="section">
+  <section class="section w20">
     <Logo />
   </section>
-  <section class="section">
+  <section class="section w40">
     <Volume />
     <Queue displayedSongs={6} />
   </section>
@@ -71,8 +71,9 @@
 
 <style>
   .main {
-    display: grid;
-    grid-template-columns: 2fr 1fr 2fr;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
     height: 100%;
   }
   .section {
@@ -80,5 +81,12 @@
     flex-direction: column;
     height: 100%;
     width: 100%;
+    max-width: 100%;
+  }
+  .w40 {
+    width: 40%;
+  }
+  .w20 {
+    width: 20%;
   }
 </style>
