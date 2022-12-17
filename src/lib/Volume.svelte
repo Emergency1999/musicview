@@ -23,7 +23,7 @@
   <div class="label-wrapper">
     <span class="label">Volume</span>
   </div>
-  <ProgressBar percentage={volume} --bg="var(--bg-light)" />
+  <ProgressBar percentage={volume} --bg="var(--bg-light)" --height="5vh" />
 </div>
 
 <style>
@@ -44,8 +44,8 @@
     justify-content: center;
   }
   .label {
-    font-size: 1.5em;
-    line-height: 1.5em;
+    font-size: 3vh;
+    line-height: 3vh;
     font-weight: bold;
     text-align: center;
   }

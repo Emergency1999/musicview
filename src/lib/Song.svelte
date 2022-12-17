@@ -38,9 +38,9 @@
       <div class="song-info">
         <span class="title">{name}</span>
         <span class="artist">{artist}</span>
-        <!-- {#if dj} -->
-        <span class="added-by">Hinzugefügt von {dj}</span>
-        <!-- {/if} -->
+        {#if dj}
+          <span class="added-by">Hinzugefügt von {dj}</span>
+        {/if}
       </div>
     </div>
     <div class="play-info">
