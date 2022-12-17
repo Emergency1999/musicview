@@ -13,10 +13,10 @@
       artist: "",
       coverURL: "such-empty.jpg",
       dj: "",
-      songDurationMs: 0,
+      songDurationMs: 256000,
       endDate: new Date(),
     },
-    positionInTrack: 0,
+    positionInTrack: 1000,
   };
 
   onMount(() => {

@@ -5,25 +5,36 @@
 </script>
 
 <div class="wrapper">
-  {#if startLabel}
-    <span class="label">{startLabel}</span>
-  {/if}
   <div class="progress-bar">
     <div class="progress-bar__fill" style="width: {percentage}%" />
   </div>
-  {#if endLabel}
-    <span class="label">{endLabel}</span>
-  {/if}
+  <div class="lower">
+    {#if startLabel}
+      <span class="label">{startLabel}</span>
+    {/if}
+    {#if endLabel}
+      <span class="label">{endLabel}</span>
+    {/if}
+  </div>
 </div>
 
 <style>
   .wrapper {
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
   }
+  .lower {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+  }
   .label {
+    padding-top: calc(var(--spacing) / 2);
     min-width: fit-content;
+    font-size: 2vh;
   }
   .label:first-child {
     margin-right: 0.5rem;
