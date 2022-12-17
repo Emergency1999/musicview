@@ -34,21 +34,23 @@
     style:background-image={"url(" + currentTrack.coverURL + ")"}
   />
 
-  <h1 class="title">{currentTrack.name}</h1>
-  <div class="subtitle">
-    <span class="artist">{currentTrack.artist}</span>
-    {#if currentTrack.dj}
-      <span class="added-by">Hinzugefügt von {currentTrack.dj}</span>
-    {/if}
-  </div>
+  <div class="lower-wrapper">
+    <h1 class="title">{currentTrack.name}</h1>
+    <div class="subtitle">
+      <span class="artist">{currentTrack.artist}</span>
+      {#if currentTrack.dj}
+        <span class="added-by">Hinzugefügt von {currentTrack.dj}</span>
+      {/if}
+    </div>
 
-  <ProgressBar
-    percentage={(positionInTrack / currentTrack.songDurationMs) * 100}
-    startLabel={positionInTrackString}
-    endLabel={durationString}
-    --height=".5em"
-    --fill="var(--text-low)"
-  />
+    <ProgressBar
+      percentage={(positionInTrack / currentTrack.songDurationMs) * 100}
+      startLabel={positionInTrackString}
+      endLabel={durationString}
+      --height=".5em"
+      --fill="var(--text-low)"
+    />
+  </div>
 </div>
 
 <style>
@@ -62,6 +64,14 @@
     background-color: var(--bg-light);
     box-sizing: border-box;
     box-shadow: var(--shadow);
+  }
+  .lower-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    flex-grow: 1;
+    width: 100%;
+    padding: var(--spacing);
   }
   .cover {
     width: 100%;
