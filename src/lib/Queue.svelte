@@ -25,13 +25,14 @@
 </script>
 
 <div class="wrapper">
-  {#each queue.slice(0, displayedSongs) as song}
-    <Song {...song} />
+  {#each Array.from({ length: displayedSongs }) as _, index}
+    {#if queue[index]}
+      <Song {...queue[index]} />
+    {:else}
+      <div class="empty" />
+    {/if}
   {:else}
     <span class="no-queue">Keine Songs in Queue</span>
-  {/each}
-  {#each new Array(displayedSongs - queue.length) as _}
-    <div class="empty" />
   {/each}
   {#if queue.length > displayedSongs}
     <div class="more">
