@@ -1,47 +1,111 @@
 <script>
-    /*
-interface QueueElement {
-    name: string;
-    artist: string;
-    coverURL: string;
-    playingTime: Date;
-    dj: string;
-}
- */
+  import ProgressBar from "./ProgressBar.svelte";
 
-    export let name = "Songtitel";
-    export let artist = "Artist";
-    export let coverURL = "";
-    export let dj = "DJ";
-    export let playingTime = undefined;
+  export let name = "Songtitel";
+  export let artist = "Artist";
+  export let coverURL = "";
+  export let dj = "DJ";
+  export let songDurationMs = undefined;
+  export let positionInTrack = undefined;
+  export let startDate = undefined;
 
-    $: playingTimeString = playingTime
-        ? "(" + new Date(playingTime).toLocaleTimeString() + ")"
-        : "";
+  $: waitingTimeString =
+    startDate !== undefined
+      ? new Date(startDate).toLocaleTimeString("de-DE")
+      : "Jetzt";
+
+  $: durationString = songDurationMs
+    ? `${Math.floor(songDurationMs / 1000 / 60)}:${Math.round(
+        (songDurationMs / 1000) % 60
+      )
+        .toString()
+        .padStart(2, "0")}`
+    : "";
+
+  $: positionInTrackString = positionInTrack
+    ? `${Math.floor(positionInTrack / 1000 / 60)}:${Math.round(
+        (positionInTrack / 1000) % 60
+      )
+        .toString()
+        .padStart(2, "0")}`
+    : "";
 </script>
 
-<div>
-    <img src={coverURL} class="logo" alt="Bild" />
-    <h1>{name}</h1>
-    <h3>{playingTimeString}</h3>
-    <h2>{artist}</h2>
-    <h3>{dj}</h3>
+<div class="wrapper">
+  <div class="text-wrapper">
+    <div class="cover" style:background-image={"url(" + coverURL + ")"} />
+    <div class="song-info">
+      <span class="title">{name}</span>
+      <span class="artist">{artist}</span>
+      {#if dj}
+        <span class="added-by">Hinzugefügt von {dj}</span>
+      {/if}
+    </div>
+    <div class="play-info">
+      <span>{waitingTimeString}</span>
+    </div>
+  </div>
+  {#if positionInTrack}
+    <ProgressBar
+      percentage={(positionInTrack / songDurationMs) * 100}
+      startLabel={positionInTrackString}
+      endLabel={durationString}
+      --height=".5em"
+      --fill="var(--text-low)"
+    />
+  {/if}
 </div>
 
 <style>
-    div {
-        display: flex;
-        margin: 1em;
-        align-items: center;
-        height: 12vh;
-        border: 1px solid #ccc;
-    }
-    h1,
-    h2 {
-        display: block;
-    }
-    img {
-        height: 12vh;
-        width: auto;
-    }
+  .wrapper {
+    padding: var(--spacing);
+    border-radius: var(--border-radius);
+    width: 100%;
+    background-color: var(--bg-light);
+    margin-top: var(--spacing);
+    position: relative;
+    flex: 1 1 0;
+    box-sizing: border-box;
+    box-shadow: var(--shadow);
+  }
+  .text-wrapper {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    height: 100%;
+  }
+  .cover {
+    height: 100%;
+    aspect-ratio: 1;
+    background-size: cover;
+  }
+  .song-info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    flex-grow: 1;
+    padding: 0 var(--spacing);
+  }
+  .title {
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+  .artist {
+    font-size: 1.2rem;
+    color: var(--text-low);
+  }
+  .added-by {
+    font-size: 1rem;
+    color: var(--text-low);
+  }
+  .play-info {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: var(--spacing);
+    font-size: 1.2rem;
+    color: var(--text-low);
+  }
 </style>

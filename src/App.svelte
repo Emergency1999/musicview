@@ -1,60 +1,84 @@
 <script>
   import { onMount } from "svelte";
-  import svelteLogo from "./assets/svelte.svg";
-  import Counter from "./lib/Counter.svelte";
+  import Logo from "./lib/Logo.svelte";
+  import MainSong from "./lib/MainSong.svelte";
   import Queue from "./lib/Queue.svelte";
-  import Song from "./lib/Song.svelte";
-import Volume from "./lib/Volume.svelte";
+  import Volume from "./lib/Volume.svelte";
 
   export let playing = {
     currentTrack: {
-      name: "Songtitel",
-      artist: "Artist",
-      coverURL: "",
-      dj: "DJ",
-      playingTime: undefined,
+      name: "Chabos wissen wer der Babo ist (Jazz/Swing Version)",
+      artist: "Marti Fischer",
+      coverURL:
+        "https://i.scdn.co/image/ab67616d00001e02e06457bcad9e375ba856a11c",
+      dj: "DJ Fieka",
+      songDurationMs: 185000,
+      endDate: new Date(),
     },
-    positionInTrack: 0,
+    positionInTrack: 37000,
   };
 
   onMount(() => {
+    let secondsInterval;
+    function resetSeconds() {
+      if (secondsInterval) clearInterval(secondsInterval);
+      secondsInterval = setInterval(() => {
+        playing.positionInTrack += 100;
+      }, 100);
+    }
+
     async function fetchData() {
       fetch("http://127.0.0.1:3000/playing")
         .then((res) => res.json())
         .then((data) => {
-          data.currentTrack.playingTime = undefined
+          // Convert to milliseconds
+          data.positionInTrack = data.positionInTrack * 1000;
+
+          // if seconds are off by more than 1 seconds, reset seconds
+          if (
+            Math.abs(data.positionInTrack * 1000 - playing.positionInTrack) >
+            1000
+          )
+            resetSeconds();
+
           playing = data;
         });
     }
 
-    const interval = setInterval(fetchData, 1000);
     fetchData();
+    resetSeconds();
+    const fetchInterval = setInterval(fetchData, 3000);
 
-    return () => clearInterval(interval);
+    return () => {
+      clearInterval(fetchInterval);
+      clearInterval(secondsInterval);
+    };
   });
 </script>
 
-<main>
-  <Volume />
-  <Song {...playing.currentTrack}/>
-  <h1>QUEUE</h1>
-
-  <Queue />
+<main class="main">
+  <section class="section">
+    <MainSong {...playing} />
+  </section>
+  <section class="section">
+    <Logo />
+  </section>
+  <section class="section">
+    <Volume />
+    <Queue displayedSongs={6} />
+  </section>
 </main>
 
 <style>
-  .logo {
-    height: 6em;
-    padding: 1.5em;
-    will-change: filter;
+  .main {
+    display: grid;
+    grid-template-columns: 2fr 1fr 2fr;
+    height: 100%;
   }
-  .logo:hover {
-    filter: drop-shadow(0 0 2em #646cffaa);
-  }
-  .logo.svelte:hover {
-    filter: drop-shadow(0 0 2em #ff3e00aa);
-  }
-  .read-the-docs {
-    color: #888;
+  .section {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
   }
 </style>
