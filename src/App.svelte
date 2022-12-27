@@ -35,7 +35,10 @@
           data.startDate = new Date(data.startDate);
 
           // Convert to milliseconds
-          data.positionInTrack = Date.now() - data.startDate.getTime();
+          data.positionInTrack = Math.min(
+            Date.now() - data.startDate.getTime(),
+            0
+          );
 
           // if seconds are off by more than 1 seconds, reset seconds
           if (

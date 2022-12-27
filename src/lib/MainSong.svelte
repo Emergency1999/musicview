@@ -12,16 +12,16 @@
   };
 
   $: durationString = currentTrack.songDurationMs
-    ? `${Math.floor(currentTrack.songDurationMs / 1000 / 60)}:${Math.round(
-        (currentTrack.songDurationMs / 1000) % 60
+    ? `${Math.floor(currentTrack.songDurationMs / 1000 / 60)}:${(
+        Math.round(currentTrack.songDurationMs / 1000) % 60
       )
         .toString()
         .padStart(2, "0")}`
     : "";
 
   $: positionInTrackString = currentTrack.positionInTrack
-    ? `${Math.floor(currentTrack.positionInTrack / 1000 / 60)}:${Math.round(
-        (currentTrack.positionInTrack / 1000) % 60
+    ? `${Math.floor(currentTrack.positionInTrack / 1000 / 60)}:${(
+        Math.round(currentTrack.positionInTrack / 1000) % 60
       )
         .toString()
         .padStart(2, "0")}`
