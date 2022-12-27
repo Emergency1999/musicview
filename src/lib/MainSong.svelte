@@ -7,9 +7,9 @@
     coverURL: "",
     dj: "",
     songDurationMs: 185000,
-    endDate: new Date(),
+    startDate: new Date(),
+    positionInTrack: 37000,
   };
-  export let positionInTrack = 37000;
 
   $: durationString = currentTrack.songDurationMs
     ? `${Math.floor(currentTrack.songDurationMs / 1000 / 60)}:${Math.round(
@@ -19,9 +19,9 @@
         .padStart(2, "0")}`
     : "";
 
-  $: positionInTrackString = positionInTrack
-    ? `${Math.floor(positionInTrack / 1000 / 60)}:${Math.round(
-        (positionInTrack / 1000) % 60
+  $: positionInTrackString = currentTrack.positionInTrack
+    ? `${Math.floor(currentTrack.positionInTrack / 1000 / 60)}:${Math.round(
+        (currentTrack.positionInTrack / 1000) % 60
       )
         .toString()
         .padStart(2, "0")}`
@@ -44,7 +44,8 @@
     </div>
 
     <ProgressBar
-      percentage={(positionInTrack / currentTrack.songDurationMs) * 100}
+      percentage={(currentTrack.positionInTrack / currentTrack.songDurationMs) *
+        100}
       startLabel={positionInTrackString}
       endLabel={durationString}
       --height=".5em"

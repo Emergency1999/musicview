@@ -9,15 +9,13 @@
   import Volume from "./lib/Volume.svelte";
 
   export let playing = {
-    currentTrack: {
-      name: "",
-      artist: "",
-      coverURL: "such-empty.jpg",
-      dj: "",
-      songDurationMs: 256000,
-      endDate: new Date(),
-    },
-    positionInTrack: 1000,
+    name: "",
+    artist: "",
+    coverURL: "such-empty.jpg",
+    dj: "",
+    songDurationMs: 256000,
+    startDate: new Date(),
+    positionInTrack: 0,
   };
 
   onMount(() => {
@@ -34,7 +32,7 @@
         .then((res) => res.json())
         .then((data) => {
           // Convert to milliseconds
-          data.positionInTrack = data.positionInTrack * 1000;
+          data.positionInTrack = data.endDate.getTime() - Date.now();
 
           // if seconds are off by more than 1 seconds, reset seconds
           if (
@@ -64,7 +62,7 @@
 
 <main class="main">
   <section class="section w40">
-    <MainSong {...playing} />
+    <MainSong currentTrack={playing} />
   </section>
   <section class="section w20" style:justify-content="space-between">
     <Time />
