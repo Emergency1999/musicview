@@ -31,8 +31,11 @@
       fetch("http://127.0.0.1:3000/playing")
         .then((res) => res.json())
         .then((data) => {
+          // convert startDate to JS Date
+          data.startDate = new Date(data.startDate);
+
           // Convert to milliseconds
-          data.positionInTrack = data.endDate.getTime() - Date.now();
+          data.positionInTrack = Date.now() - data.startDate.getTime();
 
           // if seconds are off by more than 1 seconds, reset seconds
           if (
@@ -44,7 +47,8 @@
           playing = data;
           $connectionError = false;
         })
-        .catch(() => {
+        .catch((e) => {
+          console.error("Error fetching playing", e);
           $connectionError = true;
         });
     }
