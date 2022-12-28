@@ -19,15 +19,15 @@
   <h2>{time.toLocaleTimeString("de-DE")}</h2>
 </div>
 
-<style>
-  .wrapper {
-    width: 100%;
-    padding: var(--spacing);
-    text-align: center;
-  }
-  h2 {
-    font-size: 5vh;
-    color: var(--text-low);
-    margin: 0;
-  }
+<style lang="sass">
+  .wrapper
+    width: 100%
+    padding: $spacing
+    text-align: center
+  
+  h2
+    font-size: 5vh
+    color: $text-low
+    margin: 0
+
 </style>
