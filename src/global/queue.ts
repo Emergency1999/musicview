@@ -14,7 +14,7 @@ export async function refreshQueue(): Promise<Song[]> {
         dj: "",
         songDurationMs: 218000,
         startDate: new Date(Date.now() + 49000),
-        voteSummary: 10,
+        voteSummary: Math.round(Math.random() * 10),
       },
       {
         name: "Zukunft Pink (feat. Inéz)",

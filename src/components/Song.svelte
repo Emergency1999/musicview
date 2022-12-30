@@ -6,32 +6,22 @@
 
   export let song: SongType;
 
-  const {
-    name,
-    artist,
-    coverURL,
-    dj,
-    songDurationMs,
-    startDate,
-    voteSummary: vote,
-  } = song;
-
   $: waitingTimeString =
-    startDate !== undefined
-      ? new Date(startDate).toLocaleTimeString("de-DE")
+    song.startDate !== undefined
+      ? new Date(song.startDate).toLocaleTimeString("de-DE")
       : "Jetzt";
 </script>
 
 <div class="wrapper">
   <div class="text-wrapper">
-    <div class="cover" style:background-image={"url(" + coverURL + ")"} />
+    <div class="cover" style:background-image={"url(" + song.coverURL + ")"} />
     <div class="info-outer">
       <div class="song-info__left">
         <div class="song-info__left--inner">
-          <span class="title">{name}</span>
-          <span class="artist">{artist}</span>
-          {#if dj}
-            <span class="added-by">Hinzugefügt von {dj}</span>
+          <span class="title">{song.name}</span>
+          <span class="artist">{song.artist}</span>
+          {#if song.dj}
+            <span class="added-by">Hinzugefügt von {song.dj}</span>
           {/if}
         </div>
       </div>
@@ -41,12 +31,12 @@
           <span>{waitingTimeString}</span>
         </div>
         <div class="vote-info">
-          {#if vote !== null}
-            <span>{Math.abs(vote)}</span>
+          {#if song.voteSummary !== null}
+            <span>{Math.abs(song.voteSummary)}</span>
             <div class="vote-svg">
-              {#if vote > 0}
+              {#if song.voteSummary > 0}
                 <Up width="100%" height="100%" />
-              {:else if vote < 0}
+              {:else if song.voteSummary < 0}
                 <Down width="100%" height="100%" />
               {:else}
                 <Same width="100%" height="100%" />
