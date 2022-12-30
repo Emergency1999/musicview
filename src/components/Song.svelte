@@ -41,16 +41,18 @@
           <span>{waitingTimeString}</span>
         </div>
         <div class="vote-info">
-          <span>{Math.abs(vote)}</span>
-          <div class="vote-svg">
-            {#if vote > 0}
-              <Up width="100%" height="100%" />
-            {:else if vote < 0}
-              <Down width="100%" height="100%" />
-            {:else}
-              <Same width="100%" height="100%" />
-            {/if}
-          </div>
+          {#if vote !== null}
+            <span>{Math.abs(vote)}</span>
+            <div class="vote-svg">
+              {#if vote > 0}
+                <Up width="100%" height="100%" />
+              {:else if vote < 0}
+                <Down width="100%" height="100%" />
+              {:else}
+                <Same width="100%" height="100%" />
+              {/if}
+            </div>
+          {/if}
         </div>
         <div class="right_empty" />
       </div>

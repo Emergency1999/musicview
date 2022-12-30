@@ -2,10 +2,10 @@ export interface Song {
   name: string;
   artist: string;
   coverURL: string;
-  dj: string;
+  dj: string | null;
   songDurationMs: number;
   startDate: Date | null;
-  voteSummary: number;
+  voteSummary: number | null;
 }
 
 export interface CurrentSong extends Song {

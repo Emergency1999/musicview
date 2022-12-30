@@ -31,10 +31,20 @@ export async function refreshQueue(): Promise<Song[]> {
         artist: "Lumpenpack",
         coverURL:
           "https://i.scdn.co/image/ab67616d00001e02f2eef0696e8f8808c76d02d8",
-        dj: "DJ Fieka",
+        dj: null,
         songDurationMs: 204000,
         startDate: new Date(Date.now() - 49000 + 218000 + 230000),
         voteSummary: 0,
+      },
+      {
+        name: "Favorite Color Is Blue",
+        artist: "Robert DeLong",
+        coverURL:
+          "https://i.scdn.co/image/ab67616d00001e02aab3ddb0fd66ac1127977d49",
+        dj: "DJ Fieka",
+        songDurationMs: 214000,
+        startDate: new Date(Date.now() - 49000 + 218000 + 230000 + 204000),
+        voteSummary: null,
       },
     ];
     queue.set(songs);
