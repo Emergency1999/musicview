@@ -11,6 +11,7 @@ export const currentSong = writable<CurrentSong>({
   positionInTrack: 0,
   songDurationMs: 0,
   startDate: new Date(),
+  voteSummary: 0,
 });
 // automatically increment seconds every 100ms
 let secondsInterval: NodeJS.Timer;
@@ -44,6 +45,7 @@ export async function refreshCurrentSong(): Promise<CurrentSong> {
       positionInTrack: 52000,
       songDurationMs: 101000,
       startDate: new Date(Date.now() - 52000),
+      voteSummary: 3,
     };
     currentSong.set(song);
 

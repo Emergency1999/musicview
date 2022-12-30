@@ -5,6 +5,7 @@ export interface Song {
   dj: string;
   songDurationMs: number;
   startDate: Date | null;
+  voteSummary: number;
 }
 
 export interface CurrentSong extends Song {

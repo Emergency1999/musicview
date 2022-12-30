@@ -14,6 +14,7 @@ export async function refreshQueue(): Promise<Song[]> {
         dj: "",
         songDurationMs: 218000,
         startDate: new Date(Date.now() + 49000),
+        voteSummary: 10,
       },
       {
         name: "Zukunft Pink (feat. Inéz)",
@@ -23,6 +24,17 @@ export async function refreshQueue(): Promise<Song[]> {
         dj: "DJ Fieka",
         songDurationMs: 230000,
         startDate: new Date(Date.now() - 49000 + 218000),
+        voteSummary: -3,
+      },
+      {
+        name: "Kann es sein, dass du dumm bist?",
+        artist: "Lumpenpack",
+        coverURL:
+          "https://i.scdn.co/image/ab67616d00001e02f2eef0696e8f8808c76d02d8",
+        dj: "DJ Fieka",
+        songDurationMs: 204000,
+        startDate: new Date(Date.now() - 49000 + 218000 + 230000),
+        voteSummary: 0,
       },
     ];
     queue.set(songs);

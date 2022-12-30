@@ -1,9 +1,20 @@
 <script lang="ts">
+  import Down from "assets/down.svelte";
+  import Same from "assets/same.svelte";
+  import Up from "assets/up.svelte";
   import type { Song as SongType } from "../types";
 
   export let song: SongType;
 
-  const { name, artist, coverURL, dj, songDurationMs, startDate } = song;
+  const {
+    name,
+    artist,
+    coverURL,
+    dj,
+    songDurationMs,
+    startDate,
+    voteSummary: vote,
+  } = song;
 
   $: waitingTimeString =
     startDate !== undefined
@@ -15,16 +26,34 @@
   <div class="text-wrapper">
     <div class="cover" style:background-image={"url(" + coverURL + ")"} />
     <div class="info-outer">
-      <div class="song-info">
-        <span class="title">{name}</span>
-        <span class="artist">{artist}</span>
-        {#if dj}
-          <span class="added-by">Hinzugefügt von {dj}</span>
-        {/if}
+      <div class="song-info__left">
+        <div class="song-info__left--inner">
+          <span class="title">{name}</span>
+          <span class="artist">{artist}</span>
+          {#if dj}
+            <span class="added-by">Hinzugefügt von {dj}</span>
+          {/if}
+        </div>
       </div>
-    </div>
-    <div class="play-info">
-      <span>{waitingTimeString}</span>
+
+      <div class="song-info__right">
+        <div class="play-info">
+          <span>{waitingTimeString}</span>
+        </div>
+        <div class="vote-info">
+          <span>{Math.abs(vote)}</span>
+          <div class="vote-svg">
+            {#if vote > 0}
+              <Up width="100%" height="100%" />
+            {:else if vote < 0}
+              <Down width="100%" height="100%" />
+            {:else}
+              <Same width="100%" height="100%" />
+            {/if}
+          </div>
+        </div>
+        <div class="right_empty" />
+      </div>
     </div>
   </div>
 </div>
@@ -57,24 +86,29 @@
   .info-outer
     height: 100%
     flex: 1 1 0
-    position: relative
-  
-  .song-info
-    position: absolute
-    top: 0
-    left: 0
+    display: flex    
+
+  .song-info__left
+    flex: 1 0 0
     height: 100%
-    width: 100%
-    max-width: 100%
+    position: relative
+
+  .song-info__left--inner
+    padding: 0 $spacing
     display: flex
     flex-direction: column
     align-items: flex-start
     justify-content: center
-    padding: 0 $spacing
+    position: absolute
+    top: 0
+    left: 0
+    box-sizing: border-box
+    height: 100%
+    width: 100%
   
   .title
-    font-size: 2.5vh
-    line-height: 3.5vh
+    font-size: 3vh
+    line-height: 4vh
     font-weight: bold
     overflow: hidden
     text-overflow: ellipsis
@@ -82,8 +116,8 @@
     max-width: 100%
   
   .artist
-    font-size: 1.75vh
-    line-height: 2.25vh
+    font-size: 2.5vh
+    line-height: 3.5vh
     color: $text-low
     overflow: hidden
     text-overflow: ellipsis
@@ -91,16 +125,36 @@
     max-width: 100%
   
   .added-by
-    font-size: 1.5vh
+    font-size: 1.75vh
     line-height: 2.25vh
     color: $text-low
   
+  .song-info__right
+    display: flex
+    flex-direction: column
+    align-items: flex-end
+    justify-content: space-between
+    height: 100%
+    position: relative
+
   .play-info
-    position: absolute
-    top: 0
-    right: 0
-    padding: $spacing
     font-size: 2vh
     line-height: 2vh
     color: $text-low
+  
+  .vote-info
+    display: flex
+    flex-direction: row
+    align-items: center
+    justify-content: center
+    font-size: 2.5vh
+    line-height: 2.5vh
+
+  .vote-svg
+    height: 5vh
+    width: 5vh
+    color: $text
+
+  .right_empty
+    height: 2.5vh
 </style>
