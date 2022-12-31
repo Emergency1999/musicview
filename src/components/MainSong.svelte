@@ -53,6 +53,8 @@
     flex-grow: 1
     width: 100%
     padding: $spacing
+    @media screen and (orientation: portrait)
+      padding: $spacing 0
   
   .cover
     width: 100%

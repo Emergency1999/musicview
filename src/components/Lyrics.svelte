@@ -42,7 +42,13 @@
     {:else}
       {#each $lyrics.lines as line, index}
         {#if index === currentIndex}
-          <p class="current" bind:this={currentLineEle}>{line.words}</p>
+          <!-- dont highligh current when not synced -->
+          <p
+            class:current={$lyrics.syncType === "LINE_SYNCED"}
+            bind:this={currentLineEle}
+          >
+            {line.words}
+          </p>
         {:else}
           <p>{line.words}</p>
         {/if}
