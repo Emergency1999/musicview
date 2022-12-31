@@ -45,7 +45,7 @@ export async function customFetch<T>(
     if (res.status >= 500) throw new Error(await res.text());
 
     const data = await (() => {
-      if (res.headers.get("content-type") === "application/json")
+      if (res.headers.get("Content-Type").includes("application/json"))
         return res.json();
       return res.text();
     })();

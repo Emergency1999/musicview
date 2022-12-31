@@ -3,7 +3,7 @@ import { connectionError } from "./connectionError";
 import type { CurrentSong, Song } from "../types";
 import { customFetch } from "./functions";
 
-export const currentSong = writable<CurrentSong>({
+const DEFAULT_SONG = {
   name: "No song playing",
   artist: "-",
   coverURL: "such-empty.jpg",
@@ -12,7 +12,9 @@ export const currentSong = writable<CurrentSong>({
   songDurationMs: 0,
   startDate: new Date(),
   voteSummary: 0,
-});
+};
+
+export const currentSong = writable<CurrentSong>(DEFAULT_SONG);
 // automatically increment seconds every 100ms
 let secondsInterval: NodeJS.Timer;
 // reset seconds interval
@@ -61,7 +63,10 @@ export async function refreshCurrentSong(): Promise<CurrentSong> {
       | "nothing playing"
     >("playing");
 
-    if (!song || song === "nothing playing") return null;
+    if (!song || song === "nothing playing") {
+      currentSong.set(DEFAULT_SONG);
+      return DEFAULT_SONG;
+    }
 
     const convertedSong: CurrentSong = {
       ...song,

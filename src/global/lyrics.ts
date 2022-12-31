@@ -1065,9 +1065,17 @@ export async function refreshLyrics(): Promise<Lyrics> {
 
     return newLyrics;
   } else {
-    const newLyrics = await customFetch<Lyrics>("lyrics");
+    const newLyrics = await customFetch<Lyrics | "noting playing">("lyrics");
 
-    if (!newLyrics) return null;
+    if (!newLyrics || newLyrics === "noting playing") {
+      const errorLyrics: Lyrics = {
+        error: true,
+        syncType: "NO_LYRICS",
+        lines: [],
+      };
+      lyrics.set(errorLyrics);
+      return errorLyrics;
+    }
 
     if (newLyrics.error === false)
       // convert string from api to number

@@ -99,8 +99,6 @@
     display: flex
     align-items: center
     justify-content: center
-    border-radius: $border-radius
-    background-color: $bg-light
     p
       font-size: 3vh
       line-height: 1.5
