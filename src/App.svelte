@@ -17,10 +17,10 @@
 </svelte:head>
 
 <main class="main">
-  <section class="section w40">
+  <section class="section">
     <MainSong />
   </section>
-  <section class="section w20" style:justify-content="space-between">
+  <section class="section">
     <div class="time_wrapper">
       <div class="grow-2">
         <Logo />
@@ -46,8 +46,10 @@
       <Lyrics />
     </div>
   </section>
-  <section class="section w40">
-    <Volume />
+  <section class="section" style:min-height="calc(100vh - 4rem)">
+    <div class="volume">
+      <Volume />
+    </div>
     <Queue displayedSongs={6} />
   </section>
 </main>
@@ -57,18 +59,24 @@
     display: flex
     flex-direction: row
     justify-content: space-between
-    height: 100%
+    min-height: 100%
+    @media screen and (orientation: landscape)
+      >*
+        flex: 0 0 33%
+        width: 33%
+    @media screen and (orientation: portrait)
+      flex-direction: column
+      justify-content: center
   .section
     display: flex
     flex-direction: column
-    height: 100%
-    width: 100%
     max-width: 100%
     position: relative
-  .w40
-    width: 33%
-  .w20
-    width: 33%
+    @media screen and (orientation: portrait)
+      width: 100%
+    &:nth-child(2)
+      @media screen and (orientation: portrait)
+        order: -1
   .time_wrapper
     display: flex
     align-items: center
@@ -84,6 +92,8 @@
         margin-right: calc($spacing / 2)
       &:not(:first-child)
         margin-left: calc($spacing / 2)
+    @media screen and (orientation: portrait)
+      padding: 0 0 $spacing
   .grow-2
     flex: 2 0 0
   .error
@@ -116,4 +126,10 @@
     position: relative
     flex-grow: 1
     margin: 0 $spacing
+    @media screen and (orientation: portrait)
+      display: none
+
+  .volume
+    @media screen and (orientation: portrait)
+      display: none
 </style>

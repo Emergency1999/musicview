@@ -2,9 +2,9 @@
   import lyrics from "global/lyrics";
   import currentSong from "global/currentSong";
   import type { SyncedLyrics, UnsyncedLyrics } from "../types";
+  import portrait from "global/portrait";
 
   let currentLineEle: HTMLElement | null = null;
-  let scrollWrapper: HTMLDivElement;
 
   $: currentIndex = (() => {
     if ($lyrics.error) return -1;
@@ -24,18 +24,15 @@
     }
   })();
 
-  $: currentLineEle?.scrollIntoView({
-    behavior: "smooth",
-    block: "center",
-    inline: "center",
-  });
+  $: if (currentLineEle && !$lyrics.error && !$portrait)
+    currentLineEle.scrollIntoView({
+      behavior: "smooth",
+      block: "center",
+      inline: "center",
+    });
 </script>
 
-<div
-  class="wrapper"
-  bind:this={scrollWrapper}
-  style:display={$lyrics.error ? "none" : undefined}
->
+<div class="wrapper" style:display={$lyrics.error ? "none" : undefined}>
   <div class="lyrics">
     <div class="padding_element" />
     {#if $lyrics.error}
