@@ -40,11 +40,19 @@ export async function customFetch<T>(
       },
       body: JSON.stringify(body),
       ...rest,
-    }).then((res) => res.json());
+    });
+
+    if (res.status >= 500) throw new Error(await res.text());
+
+    const data = await (() => {
+      if (res.headers.get("content-type") === "application/json")
+        return res.json();
+      return res.text();
+    })();
 
     connectionError.set(false);
 
-    return res;
+    return data;
   } catch (e) {
     console.error("Error while fetching", e);
     connectionError.set(true);

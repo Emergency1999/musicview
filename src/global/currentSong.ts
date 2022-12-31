@@ -55,10 +55,13 @@ export async function refreshCurrentSong(): Promise<CurrentSong> {
     return song;
   } else {
     const song = await customFetch<
-      Omit<CurrentSong, "positionInTrack" | "startDate"> & { startDate: string }
+      | (Omit<CurrentSong, "positionInTrack" | "startDate"> & {
+          startDate: string;
+        })
+      | "nothing playing"
     >("playing");
 
-    if (!song) return null;
+    if (!song || song === "nothing playing") return null;
 
     const convertedSong: CurrentSong = {
       ...song,
