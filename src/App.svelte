@@ -17,19 +17,16 @@
 </svelte:head>
 
 <main class="main">
-  <section class="section">
-    <MainSong />
-  </section>
-  <section class="section">
+  <section class="section" style:--width="30%">
     <div class="time_wrapper">
-      <div class="grow-2">
+      <div class="grow-2" style:max-width="20vh">
         <Logo />
       </div>
       <div>
         <Time />
       </div>
       {#if $connectionError}
-        <div class="error grow-2">
+        <div class="error grow-2" style:max-width="20vh">
           <h3>Connection Error</h3>
           <p>
             Please make sure that the server is running and that the port is
@@ -37,16 +34,23 @@
           </p>
         </div>
       {:else}
-        <div class="grow-2">
+        <div class="grow-2" style:max-width="20vh">
           <QrCode />
         </div>
       {/if}
     </div>
+    <MainSong />
+  </section>
+  <section class="section" style:--width="40%">
     <div class="lyrics">
       <Lyrics />
     </div>
   </section>
-  <section class="section" style:min-height="calc(100vh - 4rem)">
+  <section
+    class="section"
+    style:min-height="calc(100vh - 4rem)"
+    style:--width="30%"
+  >
     <div class="volume">
       <Volume />
     </div>
@@ -62,8 +66,8 @@
     min-height: 100%
     @media screen and (orientation: landscape)
       >*
-        flex: 0 0 33%
-        width: 33%
+        flex: 0 0 var(--width, 25%)
+        width: var(--width, 25%)
     @media screen and (orientation: portrait)
       flex-direction: column
       justify-content: center
@@ -86,6 +90,7 @@
     position: relative
     padding: 0 $spacing $spacing
     box-sizing: border-box
+    max-height: 20vh
     >*
       flex: 1 0 0
       &:not(:last-child)

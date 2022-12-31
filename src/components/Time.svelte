@@ -1,5 +1,6 @@
 <script>
   import { onMount } from "svelte";
+  import portrait from "global/portrait";
 
   let time = new Date();
 
@@ -20,6 +21,7 @@
     {time.toLocaleTimeString("de-DE", {
       hour: "2-digit",
       minute: "2-digit",
+      second: $portrait ? undefined : "2-digit",
     })}
   </h2>
 </div>

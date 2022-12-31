@@ -32,7 +32,7 @@
     });
 </script>
 
-<div class="wrapper" style:display={$lyrics.error ? "none" : undefined}>
+<div class="wrapper">
   <div class="lyrics">
     <div class="padding_element" />
     {#if $lyrics.error}
@@ -55,8 +55,6 @@
 <style lang="sass">
   .wrapper
     border-radius: $border-radius
-    box-shadow: $shadow
-    background-color: $bg-light
     padding: $spacing
     box-sizing: border-box
     display: flex
@@ -81,8 +79,6 @@
     line-height: 1.5
     &.current
       color: $text
-      font-size: 4vh
-      margin: $spacing 0
 
   .padding_element
     height: 100%

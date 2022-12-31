@@ -67,13 +67,13 @@
     overflow: hidden
     text-overflow: ellipsis
     white-space: nowrap
-    font-size: 5vh
-    line-height: 6vh
+    font-size: 4vh
+    line-height: 5vh
   
   .subtitle
     display: flex
-    font-size: 2vh
-    line-height: 3vh
+    font-size: 1.75vh
+    line-height: 2.25vh
     font-weight: bold
     color: $text-low
     margin-bottom: $spacing

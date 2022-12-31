@@ -99,8 +99,8 @@
     width: 100%
   
   .title
-    font-size: 3vh
-    line-height: 4vh
+    font-size: 2.5vh
+    line-height: 3vh
     font-weight: bold
     overflow: hidden
     text-overflow: ellipsis
@@ -108,8 +108,8 @@
     max-width: 100%
   
   .artist
-    font-size: 2.5vh
-    line-height: 3.5vh
+    font-size: 2vh
+    line-height: 2.5vh
     color: $text-low
     overflow: hidden
     text-overflow: ellipsis
@@ -117,8 +117,8 @@
     max-width: 100%
   
   .added-by
-    font-size: 1.75vh
-    line-height: 2.25vh
+    font-size: 1.5vh
+    line-height: 2vh
     color: $text-low
   
   .song-info__right
