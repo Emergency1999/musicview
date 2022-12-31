@@ -35,7 +35,7 @@
   
   h2
     font-size: 5vh
-    color: $text-low
+    color: $text
     margin: 0
 
 </style>
