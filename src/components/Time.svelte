@@ -16,14 +16,20 @@
 </script>
 
 <div class="wrapper">
-  <h2>{time.toLocaleTimeString("de-DE")}</h2>
+  <h2>
+    {time.toLocaleTimeString("de-DE", {
+      hour: "2-digit",
+      minute: "2-digit",
+    })}
+  </h2>
 </div>
 
 <style lang="sass">
   .wrapper
     width: 100%
-    padding: $spacing
+    padding: calc($spacing / 4)
     text-align: center
+    box-sizing: border-box
   
   h2
     font-size: 5vh

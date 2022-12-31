@@ -33,6 +33,8 @@ export interface UnsyncedLyrics {
 
 export interface NoLyrics {
   error: true;
+  syncType: "NO_LYRICS";
+  lines: [];
 }
 
-export type Lyrics = SyncedLyrics | UnsyncedLyrics | NoLyrics;
+export type Lyrics = NoLyrics | SyncedLyrics | UnsyncedLyrics;

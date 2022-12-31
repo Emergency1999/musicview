@@ -8,8 +8,7 @@
     flex-direction: column
     align-items: center
     justify-content: center
-    margin: 0 $spacing
-    padding: $spacing
+    padding: calc($spacing / 4)
     box-sizing: border-box
     background-color: $bg-light
     border-radius: $border-radius

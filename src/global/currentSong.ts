@@ -42,8 +42,11 @@ export async function refreshCurrentSong(): Promise<CurrentSong> {
       coverURL:
         "https://i.scdn.co/image/ab67616d00001e02e06457bcad9e375ba856a11c",
       dj: "DJ Fieka",
-      positionInTrack: 52000,
-      songDurationMs: 101000,
+      positionInTrack:
+        get(currentSong).positionInTrack >= 215870
+          ? 0
+          : get(currentSong).positionInTrack,
+      songDurationMs: 215870,
       startDate: new Date(Date.now() - 52000),
       voteSummary: 3,
     };
