@@ -1063,6 +1063,9 @@ export async function refreshLyrics(): Promise<Lyrics> {
     const newLyrics = possibleLyrics[3];
     lyrics.set(newLyrics);
 
+    //@ts-ignore
+    window.lyrics = lyrics;
+
     return newLyrics;
   } else {
     const newLyrics = await customFetch<Lyrics | "noting playing">("lyrics");
@@ -1088,6 +1091,9 @@ export async function refreshLyrics(): Promise<Lyrics> {
     }
 
     lyrics.set(newLyrics);
+
+    //@ts-ignore
+    window.lyrics = newLyrics;
 
     return newLyrics;
   }

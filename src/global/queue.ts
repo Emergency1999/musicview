@@ -46,12 +46,21 @@ export async function refreshQueue(): Promise<Song[]> {
         startDate: new Date(Date.now() - 49000 + 218000 + 230000 + 204000),
         voteSummary: null,
       },
-    ];
+    ]
+      .map((_, __, arr) => [...arr])
+      .flat();
+    //@ts-ignore
+    window.queue = songs;
     queue.set(songs);
     return songs;
   }
   const songs = await customFetch<Song[]>("/queue");
-  if (songs) queue.set(songs);
+  if (songs) {
+    //@ts-ignore
+    window.queue = songs;
+    queue.set(songs);
+  }
+
   return songs;
 }
 

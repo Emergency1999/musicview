@@ -34,7 +34,6 @@
   .label
     padding-top: calc($spacing / 2)
     min-width: fit-content
-    font-size: 2vh
   
   .label:first-child
     margin-right: 0.5rem

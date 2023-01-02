@@ -34,7 +34,7 @@
     box-sizing: border-box
   
   h2
-    font-size: 5vh
+    font-size: $font-header
     color: $text
     margin: 0
 

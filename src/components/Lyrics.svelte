@@ -61,7 +61,6 @@
 <style lang="sass">
   .wrapper
     border-radius: $border-radius
-    padding: $spacing
     box-sizing: border-box
     display: flex
     flex-direction: column
@@ -80,11 +79,10 @@
     margin: calc($spacing / 2) 0
     word-break: break-word
     max-width: 100%
-    color: $text-low
-    font-size: 3vh
-    line-height: 1.5
-    &.current
-      color: $text
+    font-size: $font-big
+    color: $text
+    &.current~ p
+      color: $text-low
 
   .padding_element
     height: 100%
@@ -100,8 +98,7 @@
     align-items: center
     justify-content: center
     p
-      font-size: 3vh
-      line-height: 1.5
+      font-size: $font-big
       color: $text-low
       text-align: center
       margin: 0

@@ -25,26 +25,26 @@
       <div>
         <Time />
       </div>
-      {#if $connectionError}
-        <div class="error grow-2" style:max-width="20vh">
-          <h3>Connection Error</h3>
-          <p>
-            Please make sure that the server is running and that the port is
-            correct.
-          </p>
-        </div>
-      {:else}
-        <div class="grow-2" style:max-width="20vh">
-          <QrCode />
-        </div>
-      {/if}
+      <div class="grow-2" style:max-width="20vh">
+        <QrCode />
+      </div>
     </div>
     <MainSong />
   </section>
   <section class="section" style:--width="40%">
-    <div class="lyrics">
-      <Lyrics />
-    </div>
+    {#if $connectionError}
+      <div class="error grow-2">
+        <h3>Connection Error</h3>
+        <p>
+          Please make sure that the server is running and that the port is
+          correct.
+        </p>
+      </div>
+    {:else}
+      <div class="lyrics">
+        <Lyrics />
+      </div>
+    {/if}
   </section>
   <section
     class="section"
@@ -76,11 +76,13 @@
     flex-direction: column
     max-width: 100%
     position: relative
+    box-sizing: border-box
+    padding: $spacing * 1.5
     @media screen and (orientation: portrait)
       width: 100%
     &:nth-child(2)
-      @media screen and (orientation: portrait)
-        order: -1
+      // no padding for lyrics
+      padding: 0
   .time_wrapper
     display: flex
     align-items: center
@@ -88,7 +90,7 @@
     width: 100%
     max-width: 100%
     position: relative
-    padding: 0 $spacing $spacing
+    padding-bottom: $spacing
     box-sizing: border-box
     max-height: 20vh
     >*
@@ -102,35 +104,32 @@
   .grow-2
     flex: 2 0 0
   .error
+    position: absolute
+    bottom: 0
+    left: 50%
+    transform: translateX(-50%)
     display: flex
     flex-direction: column
     align-items: center
     justify-content: center
     width: calc(100% - #{2 * $spacing})
-    background-color: $error
+    background-color: $bg
+    color: $error
     border-radius: $border-radius
     text-align: center
     padding: $spacing
     box-sizing: border-box
     margin: 0 $spacing
     h3
-      font-size: 3.5vh
-      line-height: 5vh
-      margin: 0
       margin-bottom: $spacing
-    p
-      font-size: 2vh
-      line-height: 1.5
-      margin: 0
   .lyrics
     display: flex
     align-items: center
     justify-content: center
-    width: calc(100% - 2 * $spacing)
+    width: 100%
     max-width: 100%
     position: relative
     flex-grow: 1
-    margin: 0 $spacing
     @media screen and (orientation: portrait)
       display: none
 

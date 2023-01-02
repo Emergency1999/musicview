@@ -54,6 +54,9 @@ export async function refreshCurrentSong(): Promise<CurrentSong> {
     };
     currentSong.set(song);
 
+    //@ts-ignore
+    window.currentSong = song;
+
     return song;
   } else {
     const song = await customFetch<
@@ -86,6 +89,10 @@ export async function refreshCurrentSong(): Promise<CurrentSong> {
       resetSeconds();
 
     currentSong.set(convertedSong);
+
+    //@ts-ignore
+    window.currentSong = convertedSong;
+
     return convertedSong;
   }
 }

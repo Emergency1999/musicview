@@ -1,10 +1,20 @@
 <script lang="ts">
   import Down from "assets/down.svelte";
+  import Heart from "assets/heart.svelte";
+  import HeartFilled from "assets/heart_filled.svelte";
   import Same from "assets/same.svelte";
+  import ThumbsDown from "assets/thumbs_down.svelte";
+  import ThumbsDownFilled from "assets/thumbs_down_filled.svelte";
+  import ThumbsUp from "assets/thumbs_up.svelte";
+  import ThumbsUpFilled from "assets/thumbs_up_filled.svelte";
   import Up from "assets/up.svelte";
-  import type { Song as SongType } from "../types";
+  import portrait from "global/portrait";
+  import voteForSong, { getVoteForSong } from "global/vote";
+  import { Vote, type Song as SongType } from "../types.d";
 
   export let song: SongType;
+
+  $: castedVote = getVoteForSong(song);
 
   $: waitingTimeString =
     song.startDate !== undefined
@@ -12,16 +22,16 @@
       : "Jetzt";
 </script>
 
-<div class="wrapper">
+<div class="wrapper" class:portrait={$portrait}>
   <div class="text-wrapper">
     <div class="cover" style:background-image={"url(" + song.coverURL + ")"} />
     <div class="info-outer">
       <div class="song-info__left">
         <div class="song-info__left--inner">
-          <span class="title">{song.name}</span>
+          <h2 class="title">{song.name}</h2>
           <span class="artist">{song.artist}</span>
           {#if song.dj}
-            <span class="added-by">Hinzugefügt von {song.dj}</span>
+            <h4 class="added-by">Hinzugefügt von {song.dj}</h4>
           {/if}
         </div>
       </div>
@@ -32,16 +42,40 @@
         </div>
         <div class="vote-info">
           {#if song.voteSummary !== null}
-            <span>{Math.abs(song.voteSummary)}</span>
-            <div class="vote-svg">
-              {#if song.voteSummary > 0}
-                <Up width="100%" height="100%" />
-              {:else if song.voteSummary < 0}
-                <Down width="100%" height="100%" />
-              {:else}
-                <Same width="100%" height="100%" />
-              {/if}
-            </div>
+            {#if $portrait && import.meta.env.PUBLIC_DISABLE_VOTING !== "true"}
+              <div class="vote-buttons">
+                <h2>{song.voteSummary}</h2>
+                {#each [{ icon: Heart, iconSelected: HeartFilled, vote: Vote.Double }, { icon: ThumbsUp, iconSelected: ThumbsUpFilled, vote: Vote.Up }, { icon: ThumbsDown, iconSelected: ThumbsDownFilled, vote: Vote.Down }] as { icon, iconSelected, vote }}
+                  <button
+                    class="vote-svg"
+                    on:click={() => {
+                      voteForSong(song, vote);
+                      // update song to trigger recalculation of castedVote
+                      song = { ...song };
+                    }}
+                  >
+                    <svelte:component
+                      this={castedVote && castedVote.vote === vote
+                        ? iconSelected
+                        : icon}
+                      width="100%"
+                      height="100%"
+                    />
+                  </button>
+                {/each}
+              </div>
+            {:else}
+              <h3>{Math.abs(song.voteSummary)}</h3>
+              <div class="vote-svg">
+                {#if song.voteSummary > 0}
+                  <Up width="100%" height="100%" />
+                {:else if song.voteSummary < 0}
+                  <Down width="100%" height="100%" />
+                {:else}
+                  <Same width="100%" height="100%" />
+                {/if}
+              </div>
+            {/if}
           {/if}
         </div>
         <div class="right_empty" />
@@ -62,6 +96,8 @@
     box-sizing: border-box
     box-shadow: $shadow
     max-height: 30vh
+    &.portrait
+      min-height: calc(($font-big + $spacing / 2) * 2 + 2 * $font-medium + 2 * $spacing)
   
   .text-wrapper
     display: flex
@@ -99,17 +135,12 @@
     width: 100%
   
   .title
-    font-size: 2.5vh
-    line-height: 3vh
-    font-weight: bold
     overflow: hidden
     text-overflow: ellipsis
     white-space: nowrap
     max-width: 100%
   
   .artist
-    font-size: 2vh
-    line-height: 2.5vh
     color: $text-low
     overflow: hidden
     text-overflow: ellipsis
@@ -117,8 +148,6 @@
     max-width: 100%
   
   .added-by
-    font-size: 1.5vh
-    line-height: 2vh
     color: $text-low
   
   .song-info__right
@@ -130,23 +159,34 @@
     position: relative
 
   .play-info
-    font-size: 2vh
-    line-height: 2vh
+    line-height: 1
     color: $text-low
+    padding-right: calc($spacing / 2)
   
   .vote-info
     display: flex
     flex-direction: row
     align-items: center
     justify-content: center
-    font-size: 2.5vh
-    line-height: 2.5vh
+    text-align: center
 
   .vote-svg
     height: 5vh
     width: 5vh
     color: $text
+    background: transparent
+    border: none
+    outline: none
+
+  .vote-buttons
+    display: grid
+    grid-template-columns: 1fr 1fr
+    align-items: center
+    justify-content: center
+    button
+      height: $font-header
+      padding: calc($spacing / 4)
 
   .right_empty
-    height: 2.5vh
+    height: $font-medium
 </style>

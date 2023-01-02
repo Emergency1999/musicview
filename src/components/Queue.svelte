@@ -1,24 +1,32 @@
 <script lang="ts">
   import Song from "./Song.svelte";
   import queue from "global/queue";
+  import portrait from "global/portrait";
   export let displayedSongs = 5;
 </script>
 
 <div class="wrapper">
+  <h2 class="header">Queue</h2>
   {#if $queue.length === 0}
-    <span class="no-queue">Keine Songs in Queue</span>
+    <h2 class="no-queue">Keine Songs in Queue</h2>
   {/if}
-  {#each Array.from({ length: displayedSongs }) as _, index}
-    {#if $queue[index]}
-      <Song song={$queue[index]} />
-    {:else}
-      <div class="empty" />
+  {#if $portrait && $queue.length > displayedSongs}
+    {#each $queue as song}
+      <Song {song} />
+    {/each}
+  {:else}
+    {#each Array.from({ length: displayedSongs }) as _, index}
+      {#if $queue[index]}
+        <Song song={$queue[index]} />
+      {:else}
+        <div class="empty" />
+      {/if}
+    {/each}
+    {#if $queue.length > displayedSongs}
+      <div class="more">
+        <span>+{$queue.length - displayedSongs}</span>
+      </div>
     {/if}
-  {/each}
-  {#if $queue.length > displayedSongs}
-    <div class="more">
-      <span>+{$queue.length - displayedSongs}</span>
-    </div>
   {/if}
 </div>
 
@@ -30,20 +38,33 @@
     width: 100%
     flex-grow: 1
     position: relative
+
+  .header
+    background: $bg2
+    color: $text
+    width: 100%
+    text-align: center
+    padding: calc($spacing / 2)
+    margin: 0
+    border-radius: $border-radius
+    box-shadow: $shadow
+    box-sizing: border-box
+    @media screen and (orientation: landscape)
+      display: none
+    
   
   .empty
     flex: 1 1 0
   
   .no-queue
     color: $text
-    font-size: 2.5vh
     text-align: center
     width: 100%
     margin-top: $spacing
     padding: $spacing
   
   .more
-    --size: 6vh
+    --size: 3vmax
     position: absolute
     bottom: calc(var(--size) / -2)
     right: calc(50% - (var(--size) / 2))

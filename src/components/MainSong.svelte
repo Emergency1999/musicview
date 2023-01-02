@@ -40,7 +40,7 @@
     flex-direction: column
     width: 100%
     height: 100%
-    padding: calc($spacing * 2)
+    padding: calc($spacing * 1.5)
     border-radius: $border-radius
     background-color: $bg-light
     box-sizing: border-box
@@ -52,7 +52,7 @@
     justify-content: center
     flex-grow: 1
     width: 100%
-    padding: $spacing
+    margin-top: $spacing
     @media screen and (orientation: portrait)
       padding: $spacing 0
   
@@ -60,22 +60,17 @@
     width: 100%
     aspect-ratio: 1
     background-size: cover
-  
+    box-shadow: $shadow
 
   .title
     margin: 0
-    margin-top: $spacing
     max-width: 100%
     overflow: hidden
     text-overflow: ellipsis
     white-space: nowrap
-    font-size: 4vh
-    line-height: 5vh
   
   .subtitle
     display: flex
-    font-size: 1.75vh
-    line-height: 2.25vh
     font-weight: bold
     color: $text-low
     margin-bottom: $spacing
