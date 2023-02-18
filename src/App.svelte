@@ -9,6 +9,12 @@
   import "./app.sass";
   import Lyrics from "components/Lyrics.svelte";
   import VoteNow from "components/VoteNow.svelte";
+  import portrait from "global/portrait";
+
+  const urlParams = new URLSearchParams(window.location.search);
+  const lyrics = urlParams.get("lyrics");
+  $: showLyrics =
+    lyrics === "false" ? false : lyrics === "true" ? true : $portrait;
 </script>
 
 <svelte:head>
@@ -17,16 +23,16 @@
   </style>
 </svelte:head>
 
-<main class="main">
+<main class="main" class:show-lyrics={!!showLyrics}>
   <div class="header">
     <div style:grid-area="logo">
       <div class="absolute">
         <Logo />
       </div>
     </div>
-    <div style:grid-area="time">
+    <div style:grid-area="time" class="time">
       <div class="absolute">
-        <Time />
+        <Time big={!showLyrics} />
       </div>
     </div>
     <div style:grid-area="qr">
@@ -47,7 +53,7 @@
   <div class="current">
     <MainSong />
   </div>
-  <div class="lyrics">
+  <div class="lyrics" style:display={showLyrics ? undefined : "none"}>
     <Lyrics />
   </div>
   <div class="queue">
@@ -64,15 +70,36 @@
 <style lang="sass">
   .main
     display: grid
-    grid-template-areas: "current header queue"
-    grid-template-columns: 1fr 20% 1fr
-    grid-template-rows: 1fr
     justify-content: center
     align-items: center
     grid-gap: $spacing
     margin: calc($spacing * 1.5)
     width: calc(100% - #{3 * $spacing})
     min-height: calc(100% - #{3 * $spacing})
+    
+    grid-template-columns: 1fr 20% 1fr
+    grid-template-areas: "current header queue"
+    grid-template-rows: 1fr
+    &.show-lyrics
+      @media (orientation: landscape)
+        grid-template-columns: 1fr 1fr 1fr
+        grid-template-areas: "current header queue" "current lyrics queue"
+        grid-template-rows: 33% 1fr
+        grid-gap: 0
+        grid-column-gap: $spacing
+        .header
+          grid-template-areas: "logo qr"
+          grid-template-columns: 1fr 1fr
+          grid-template-rows: 1fr
+          height: 100%
+          .time
+            display: none
+    &:not(.show-lyrics)
+      @media (orientation: portrait)
+        grid-template-areas: "current" "vote" "queue"
+        grid-template-columns: 100%
+        grid-template-rows: auto auto auto
+
     >*
       position: relative
       @media (orientation: landscape)
@@ -80,7 +107,7 @@
     @media (orientation: portrait)
       grid-template-areas: "current" "lyrics" "vote" "queue"
       grid-template-columns: 100%
-      grid-template-rows: auto 50vh auto
+      grid-template-rows: auto 50vh auto auto
       width: calc(100% - #{3 * $spacing})
       min-height: calc(100% - #{2 * $spacing})
 
@@ -141,8 +168,6 @@
   .lyrics
     grid-area: lyrics
     height: 100%
-    @media screen and (orientation: landscape)
-      display: none
 
   .volume
     @media screen and (orientation: portrait)

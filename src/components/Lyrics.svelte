@@ -2,7 +2,6 @@
   import lyrics from "global/lyrics";
   import currentSong from "global/currentSong";
   import type { SyncedLyrics, UnsyncedLyrics } from "../types";
-  import portrait from "global/portrait";
 
   let currentLineEle: HTMLElement | null = null;
 
@@ -82,8 +81,7 @@
   .lyrics
     position: absolute
     inset: 0
-    overflow-x: hidden
-    overflow-y: auto
+    overflow: hidden
     scroll-behavior: smooth
     pointer-events: none
           

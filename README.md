@@ -18,7 +18,19 @@ Following environment variables can be used (only `PUBLIC_SERVER_URL` is mandato
   PUBLIC_QUEUE_FETCH_INTERVAL: number = 3000,
   PUBLIC_CURRENT_SONG_FETCH_INTERVAL: number = 3000,
   PUBLIC_LYRICS_FETCH_INTERVAL: number = 20000,
+  // fallback link if no qr code link is given as url query param
+  PUBLIC_DEFAULT_QR_LINK: string = "https://t.me/MusicHomeBot"
+  // link the vote button redirects to
+  PUBLIC_VOTE_LINK: string = "https://t.me/MusicHomeBot"
 }
 ```
 
 You can change the environment variables in the `.env.production` in the root folder or pass them when running the `yarn build` or `yarn start` command.
+
+## Query Parameters
+
+Following query parameters are possible to change the behavior of the site
+
+1. `qr`: link the QR code goes to (e.g. `?qr=https%3A%2F%2Ft.me%2FMusicHomeBot`)
+2. `vote`: link the vote button goes to (e.g. `?vote=https%3A%2F%2Ft.me%2FMusicHomeBot`)
+3. `lyrics`: `"true" | "false"` whether to show the lyrics or not (e.g. `?lyrics=true`)

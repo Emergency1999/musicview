@@ -1,18 +1,34 @@
 <script lang="ts">
   import SquareGrow from "./SquareGrow.svelte";
+  import QrCreator from "qr-creator";
 
   const urlParams = new URLSearchParams(window.location.search);
-  const qr = urlParams.get("qr") as "bot" | "self" | "";
+  const qr = urlParams.get("qr");
 
-  $: src = qr === "bot" ? "qrcode bot.png" : "qrcode localhost.png";
-  $: link =
-    qr === "bot" ? "https://t.me/MusicHomeBot" : "http://192.168.1.20:8080";
+  export let link: string = "";
+  let wrapper: HTMLDivElement;
+  $: src = link || qr || import.meta.env.PUBLIC_DEFAULT_QR_LINK;
+
+  $: if (wrapper)
+    QrCreator.render(
+      {
+        text: src,
+        radius: 0.5,
+        ecLevel: "H",
+        fill: "#ddd",
+        background: null,
+        size: 1080,
+      },
+      wrapper
+    );
 </script>
 
 <SquareGrow>
-  <div class="wrapper" on:click={() => window.open(link, "_blank")}>
-    <img {src} alt="QR Code" class="qr-code" />
-  </div>
+  <div
+    class="wrapper"
+    on:click={() => window.open(src, "_blank")}
+    bind:this={wrapper}
+  />
 </SquareGrow>
 
 <style lang="sass">
@@ -22,14 +38,14 @@
     justify-content: center
     height: 100%
     width: 100%
-    padding: calc($spacing / 4)
+    padding: calc($spacing / 2)
     box-sizing: border-box
     background-color: $bg-light
     border-radius: $border-radius
     box-shadow: $shadow
     cursor: pointer
 
-  .qr-code
+  .wrapper :global(canvas)
     height: 100%
     width: 100%
     object-fit: contain

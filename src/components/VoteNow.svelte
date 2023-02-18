@@ -1,6 +1,14 @@
-<button on:click={() => window.open("https://t.me/MusicHomeBot", "_blank")}>
-  → Mitbestimmen ←
-</button>
+<script lang="ts">
+  const urlParams = new URLSearchParams(window.location.search);
+  const query = urlParams.get("vote");
+
+  $: link =
+    query ||
+    import.meta.env.PUBLIC_VOTE_LINK ||
+    import.meta.env.PUBLIC_DEFAULT_QR_LINK;
+</script>
+
+<button on:click={() => window.open(link, "_blank")}> → Mitbestimmen ← </button>
 
 <style lang="sass">
   button
