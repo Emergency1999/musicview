@@ -6,9 +6,7 @@
 
   $: src = qr === "bot" ? "qrcode bot.png" : "qrcode localhost.png";
   $: link =
-    qr === "bot"
-      ? "https://t.me/MusicHomeBot"
-      : "http://192.168.1.20:8080?qr=bot";
+    qr === "bot" ? "https://t.me/MusicHomeBot" : "http://192.168.1.20:8080";
 </script>
 
 <SquareGrow>
