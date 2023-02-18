@@ -1,7 +1,6 @@
 <script lang="ts">
   import Song from "./Song.svelte";
   import queue from "global/queue";
-  import portrait from "global/portrait";
   export let displayedSongs = 5;
 </script>
 
@@ -10,23 +9,17 @@
   {#if $queue.length === 0}
     <h2 class="no-queue">Keine Songs in Queue</h2>
   {/if}
-  {#if $portrait && $queue.length > displayedSongs}
-    {#each $queue as song}
-      <Song {song} />
-    {/each}
-  {:else}
-    {#each Array.from({ length: displayedSongs }) as _, index}
-      {#if $queue[index]}
-        <Song song={$queue[index]} />
-      {:else}
-        <div class="empty" />
-      {/if}
-    {/each}
-    {#if $queue.length > displayedSongs}
-      <div class="more">
-        <span>+{$queue.length - displayedSongs}</span>
-      </div>
+  {#each Array.from({ length: displayedSongs }) as _, index}
+    {#if $queue[index]}
+      <Song song={$queue[index]} />
+    {:else}
+      <div class="empty" />
     {/if}
+  {/each}
+  {#if $queue.length > displayedSongs}
+    <div class="more">
+      <span>+{$queue.length - displayedSongs}</span>
+    </div>
   {/if}
 </div>
 
@@ -40,11 +33,12 @@
     position: relative
 
   .header
-    background: $bg2
+    background: $bg-light
     color: $text
     width: 100%
     text-align: center
-    padding: calc($spacing / 2)
+    padding: calc($spacing * 2)
+    font-size: 1.5rem
     margin: 0
     border-radius: $border-radius
     box-shadow: $shadow

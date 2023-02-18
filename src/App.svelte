@@ -8,6 +8,7 @@
   import Volume from "./components/Volume.svelte";
   import "./app.sass";
   import Lyrics from "components/Lyrics.svelte";
+  import VoteNow from "components/VoteNow.svelte";
 </script>
 
 <svelte:head>
@@ -17,97 +18,111 @@
 </svelte:head>
 
 <main class="main">
-  <section class="section" style:--width="30%">
-    <div class="time_wrapper">
-      <div class="grow-2" style:max-width="20vh">
+  <div class="header">
+    <div style:grid-area="logo">
+      <div class="absolute">
         <Logo />
       </div>
-      <div>
+    </div>
+    <div style:grid-area="time">
+      <div class="absolute">
         <Time />
       </div>
-      <div class="grow-2" style:max-width="20vh">
+    </div>
+    <div style:grid-area="qr">
+      <div class="absolute">
         <QrCode />
       </div>
     </div>
-    <MainSong />
-  </section>
-  <section class="section" style:--width="40%">
     {#if $connectionError}
-      <div class="error grow-2">
+      <div class="error">
         <h3>Connection Error</h3>
         <p>
           Please make sure that the server is running and that the port is
           correct.
         </p>
       </div>
-    {:else}
-      <div class="lyrics">
-        <Lyrics />
-      </div>
     {/if}
-  </section>
-  <section
-    class="section"
-    style:min-height="calc(100vh - 4rem)"
-    style:--width="30%"
-  >
+  </div>
+  <div class="current">
+    <MainSong />
+  </div>
+  <div class="lyrics">
+    <Lyrics />
+  </div>
+  <div class="queue">
     <div class="volume">
       <Volume />
     </div>
     <Queue displayedSongs={6} />
-  </section>
+  </div>
+  <div class="vote">
+    <VoteNow />
+  </div>
 </main>
 
 <style lang="sass">
   .main
-    display: flex
-    flex-direction: row
-    justify-content: space-between
-    min-height: 100%
-    @media screen and (orientation: landscape)
-      >*
-        flex: 0 0 var(--width, 25%)
-        width: var(--width, 25%)
+    display: grid
+    grid-template-areas: "current header queue"
+    grid-template-columns: 1fr 20% 1fr
+    grid-template-rows: 1fr
+    justify-content: center
+    align-items: center
+    grid-gap: $spacing
+    margin: calc($spacing * 1.5)
+    width: calc(100% - #{3 * $spacing})
+    min-height: calc(100% - #{3 * $spacing})
+    >*
+      position: relative
+      @media (orientation: landscape)
+        height: 100%
+    @media (orientation: portrait)
+      grid-template-areas: "current" "lyrics" "vote" "queue"
+      grid-template-columns: 100%
+      grid-template-rows: auto 50vh auto
+      width: calc(100% - #{3 * $spacing})
+      min-height: calc(100% - #{2 * $spacing})
+
+  .header
+    grid-area: header
+    display: grid
+    grid-template-columns: auto
+    grid-template-rows: 1fr 2fr 2fr
+    align-items: center
+    max-height: 100%
+    grid-gap: $spacing
     @media screen and (orientation: portrait)
-      flex-direction: column
-      justify-content: center
-  .section
-    display: flex
-    flex-direction: column
-    max-width: 100%
-    position: relative
-    box-sizing: border-box
-    padding: $spacing * 1.5
-    @media screen and (orientation: portrait)
+      display: none
+    @media (orientation: landscape)
+      height: 100%
+      grid-template-areas: "time" "logo" "qr"
+    >*
+      position: relative
+      height: 100%
       width: 100%
-    &:nth-child(2)
-      // no padding for lyrics
-      padding: 0
-  .time_wrapper
+
+  .absolute
+    position: absolute
+    inset: 0
+    width: 100%
+    height: 100%
     display: flex
     align-items: center
     justify-content: center
-    width: 100%
-    max-width: 100%
-    position: relative
-    padding-bottom: $spacing
-    box-sizing: border-box
-    max-height: 20vh
-    >*
-      flex: 1 0 0
-      &:not(:last-child)
-        margin-right: calc($spacing / 2)
-      &:not(:first-child)
-        margin-left: calc($spacing / 2)
-    @media screen and (orientation: portrait)
-      padding: 0 0 $spacing
-  .grow-2
-    flex: 2 0 0
+
+  .current
+    grid-area: current
+    @media (orientation: landscape)
+      height: 100%
+
+  .queue
+    grid-area: queue
+    display: flex
+    flex-direction: column
+  
   .error
-    position: absolute
-    bottom: 0
-    left: 50%
-    transform: translateX(-50%)
+    width: 100%
     display: flex
     flex-direction: column
     align-items: center
@@ -122,18 +137,19 @@
     margin: 0 $spacing
     h3
       margin-bottom: $spacing
+
   .lyrics
-    display: flex
-    align-items: center
-    justify-content: center
-    width: 100%
-    max-width: 100%
-    position: relative
-    flex-grow: 1
-    @media screen and (orientation: portrait)
+    grid-area: lyrics
+    height: 100%
+    @media screen and (orientation: landscape)
       display: none
 
   .volume
     @media screen and (orientation: portrait)
+      display: none
+  
+  .vote
+    grid-area: vote
+    @media screen and (orientation: landscape)
       display: none
 </style>

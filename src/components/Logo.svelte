@@ -1,25 +1,10 @@
 <script lang="ts">
   import Music from "../assets/music.svelte";
+  import SquareGrow from "./SquareGrow.svelte";
+
+  let wrapperEle: HTMLDivElement;
 </script>
 
-<div class="wrapper">
-  <div class="logo-wrapper">
-    <Music height="100%" width="100%" />
-  </div>
-</div>
-
-<style lang="sass">
-  .wrapper
-    height: 100%
-    width: 100%
-    display: flex
-    align-items: center
-    justify-content: center
-    box-sizing: border-box
-  
-  .logo-wrapper
-    max-height: 100%
-    max-width: 100%
-    width: 100%
-    aspect-ratio: 1
-</style>
+<SquareGrow>
+  <Music height="100%" width="100%" />
+</SquareGrow>

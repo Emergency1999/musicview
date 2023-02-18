@@ -24,16 +24,20 @@
     }
   })();
 
-  $: if (currentLineEle && !$lyrics.error && !$portrait)
-    currentLineEle.scrollIntoView({
-      behavior: "smooth",
-      block: "center",
-      inline: "center",
-    });
+  let wrapper: HTMLDivElement;
+
+  $: if (currentLineEle && !$lyrics.error && wrapper) {
+    wrapper.scrollTop = currentLineEle.offsetTop - wrapper.offsetHeight / 2;
+  }
+  // currentLineEle.scrollIntoView({
+  //   behavior: "smooth",
+  //   block: "center",
+  //   inline: "center",
+  // });
 </script>
 
 <div class="wrapper">
-  <div class="lyrics">
+  <div class="lyrics" bind:this={wrapper}>
     <div class="padding_element" />
     {#if $lyrics.error}
       <div class="no-lyrics">
@@ -71,8 +75,17 @@
     top: 0
     left: 0
     overflow: auto
+    pointer-events: none
     &::-webkit-scrollbar
       width: 0
+
+  .lyrics
+    position: absolute
+    inset: 0
+    overflow-x: hidden
+    overflow-y: auto
+    scroll-behavior: smooth
+    pointer-events: none
           
   p
     text-align: center

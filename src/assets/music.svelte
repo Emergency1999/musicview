@@ -1,6 +1,8 @@
 <script lang="ts">
   export let height: string = "100";
   export let width: string = "100";
+
+  export let style = "";
 </script>
 
 <svg
@@ -10,6 +12,7 @@
   viewBox="30 10 40 20"
   {width}
   {height}
+  {style}
 >
   <circle cx="50" cy="20" r="20" fill="#b6a3f8" />
   <g clip-rule="evenodd" fill-rule="evenodd">
