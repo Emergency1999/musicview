@@ -29,8 +29,9 @@ You can change the environment variables in the `.env.production` in the root fo
 
 ## Query Parameters
 
-Following query parameters are possible to change the behavior of the site
+Following query parameters are possible to change the behavior of the site. All query parameters are optional.
 
 1. `qr`: link the QR code goes to (e.g. `?qr=https%3A%2F%2Ft.me%2FMusicHomeBot`)
 2. `vote`: link the vote button goes to (e.g. `?vote=https%3A%2F%2Ft.me%2FMusicHomeBot`)
 3. `lyrics`: `"true" | "false"` whether to show the lyrics or not (e.g. `?lyrics=true`)
+4. `only-lyrics`: `"true" | "false"` whether to show only the lyrics or default view (e.g. `?only-lyrics=true`)

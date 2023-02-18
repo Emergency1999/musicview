@@ -15,6 +15,7 @@
   const lyrics = urlParams.get("lyrics");
   $: showLyrics =
     lyrics === "false" ? false : lyrics === "true" ? true : $portrait;
+  const onlyLyrics = urlParams.get("only-lyrics");
 </script>
 
 <svelte:head>
@@ -23,7 +24,11 @@
   </style>
 </svelte:head>
 
-<main class="main" class:show-lyrics={!!showLyrics}>
+<main
+  class="main"
+  class:show-lyrics={!!showLyrics}
+  class:only-lyrics={onlyLyrics}
+>
   <div class="header">
     <div style:grid-area="logo">
       <div class="absolute">
@@ -53,7 +58,10 @@
   <div class="current">
     <MainSong />
   </div>
-  <div class="lyrics" style:display={showLyrics ? undefined : "none"}>
+  <div
+    class="lyrics"
+    style:display={onlyLyrics || showLyrics ? undefined : "none"}
+  >
     <Lyrics />
   </div>
   <div class="queue">
@@ -99,6 +107,28 @@
         grid-template-areas: "current" "vote" "queue"
         grid-template-columns: 100%
         grid-template-rows: auto auto auto
+
+    &.only-lyrics
+      @media (orientation: portrait)
+        grid-template-areas: "current" "lyrics"
+        grid-template-columns: 100%
+        grid-template-rows: auto 1fr
+        .current
+          margin: $spacing $spacing 0 $spacing
+      @media (orientation: landscape)
+        grid-template-areas: "current lyrics"
+        grid-template-columns: 40% 1fr
+        grid-template-rows: 100%
+        .current
+          padding: calc($spacing * 1.5)
+          box-sizing: border-box
+      margin: 0
+      width: 100%
+      height: 100%
+      >*:not(.lyrics):not(.current)
+        display: none
+      .lyrics
+        display: block
 
     >*
       position: relative
