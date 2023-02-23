@@ -26,4 +26,8 @@ export default defineConfig({
       global: path.resolve("./src/global"),
     },
   },
+  server: {
+    host: true,
+    port: 3000,
+  },
 });

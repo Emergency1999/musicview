@@ -27,6 +27,7 @@
   <div
     class="wrapper"
     on:click={() => window.open(src, "_blank")}
+    on:keydown={() => window.open(src, "_blank")}
     bind:this={wrapper}
   />
 </SquareGrow>
